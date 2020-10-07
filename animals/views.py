@@ -13,6 +13,10 @@ def serialized_data(data):
 
 
 def get_all_animals(request):
+    name = request.GET.get('name')
+    if name:
+        animal = Animal.objects.all().filter(name=name)
+        return serialized_data(animal)
     animals = Animal.objects.all()
 
     return HttpResponse(serialized_data(animals))
@@ -26,3 +30,13 @@ def get_animal(request, animal_id):
 def get_all_dogs(request):
     dogs = Animal.objects.filter(kind='D')
     return HttpResponse(serialized_data(dogs))
+
+
+def order_animals(request):
+    animals = Animal.objects.all().order_by('age')
+    return HttpResponse(serialized_data(animals))
+
+
+def get_all_cats(request):
+    cats = Animal.objects.filter(kind='C')
+    return HttpResponse(serialized_data(cats))
