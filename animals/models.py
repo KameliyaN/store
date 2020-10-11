@@ -4,9 +4,12 @@ from django.db import models
 # Create your models here.
 
 
-# class Owner(models.Model):
-#     first_name = models.CharField(max_length=20)
-#     last_name = models.CharField(max_length=20)
+class Owner(models.Model):
+    first_name = models.CharField(max_length=20, null=True, blank=True)
+    last_name = models.CharField(max_length=20, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
 
 
 class Animal(models.Model):
@@ -14,13 +17,13 @@ class Animal(models.Model):
         ('D', 'dog'),
         ('C', 'cat')
     )
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=200)
     age = models.PositiveIntegerField()
-    breed = models.CharField(max_length=20)
-    kind = models.CharField(max_length=1, choices=KIND_CHOICES)
-    image_url = models.URLField()
+    breed = models.CharField(max_length=200)
     description = models.TextField()
-    #owner = models.ForeignKey(Owner, on_delete=models.CASCADE, default=0)
+    image_url = models.URLField()
+    kind = models.CharField(max_length=1, choices=KIND_CHOICES)
+    owner = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.name} and i am {self.age}'
+        return f'{self.name} and i am {self.kind}'
