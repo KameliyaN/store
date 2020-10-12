@@ -2,7 +2,8 @@ from django.urls import path, re_path
 
 import animals
 from animals import views
-app_name=animals
+
+app_name = animals
 
 urlpatterns = [
     re_path('^all/$', views.get_all_animals, name='all'),
